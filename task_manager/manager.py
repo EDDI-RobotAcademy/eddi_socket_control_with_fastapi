@@ -49,6 +49,7 @@ class TaskManager(object):
         receiverService = ReceiverServiceImpl.getInstance()
         receiverService.requestToInjectClientSocket()
 
+        # TODO: 구성 시 submodule에 해당하는 Socket Server 자체 브랜치에서 처리하도록 함
         # TODO: receiver와 fastapi간 IPC Channel 구성 필요함
 
         taskWorkerService.createTaskWorker("Receiver", receiverService.requestToReceiveClient)
