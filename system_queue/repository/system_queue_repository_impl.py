@@ -6,8 +6,8 @@ from system_queue.repository.system_queue_repository import SystemQueueRepositor
 class SystemQueueRepositoryImpl(SystemQueueRepository):
     __instance = None
 
-    __systemFastAPISocketReceiverChannel = None
-    __systemSocketTransmitterFastAPIChannel = None
+    __systemSocketReceiverFastAPIChannel = None
+    __systemFastAPISocketTransmitterChannel = None
 
     def __new__(cls):
         if cls.__instance is None:
@@ -22,13 +22,13 @@ class SystemQueueRepositoryImpl(SystemQueueRepository):
 
         return cls.__instance
 
-    def getSystemFastAPISocketReceiverChannel(self):
-        return self.__systemFastAPISocketReceiverChannel
+    def getSystemSocketReceiverFastAPIChannel(self):
+        return self.__systemSocketReceiverFastAPIChannel
 
     def getSystemSocketTransmitterFastAPIChannel(self):
-        return self.__systemSocketTransmitterFastAPIChannel
+        return self.__systemFastAPISocketTransmitterChannel
 
     def createEssential(self):
-        self.__systemFastAPISocketReceiverChannel = multiprocessing.Queue()
-        self.__systemSocketTransmitterFastAPIChannel = multiprocessing.Queue()
+        self.__systemSocketReceiverFastAPIChannel = multiprocessing.Queue()
+        self.__systemFastAPISocketTransmitterChannel = multiprocessing.Queue()
     
