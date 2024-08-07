@@ -49,11 +49,15 @@ class TaskManager(object):
         receiverService = ReceiverServiceImpl.getInstance()
         receiverService.requestToInjectClientSocket()
 
+        # TODO: receiver와 fastapi간 IPC Channel 구성 필요함
+
         taskWorkerService.createTaskWorker("Receiver", receiverService.requestToReceiveClient)
         taskWorkerService.executeTaskWorker("Receiver")
 
         transmitterService = TransmitterServiceImpl.getInstance()
         transmitterService.requestToInjectClientSocket()
+
+        # TODO: transmitter와 fastapi간 IPC Channel 구성 필요함
 
         taskWorkerService.createTaskWorker("Transmitter", transmitterService.requestToTransmitClient)
         taskWorkerService.executeTaskWorker("Transmitter")
