@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class IPCQueueService(ABC):
+class SystemQueueRepository(ABC):
     @abstractmethod
-    def createEssentialIPCQueue(self):
+    def createEssential(self):
         pass
