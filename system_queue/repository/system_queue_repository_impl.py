@@ -25,7 +25,7 @@ class SystemQueueRepositoryImpl(SystemQueueRepository):
     def getSystemSocketReceiverFastAPIChannel(self):
         return self.__systemSocketReceiverFastAPIChannel
 
-    def getSystemSocketTransmitterFastAPIChannel(self):
+    def getSystemFastAPISocketTransmitterChannel(self):
         return self.__systemFastAPISocketTransmitterChannel
 
     def createEssential(self):

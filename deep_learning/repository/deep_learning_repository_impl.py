@@ -2,6 +2,7 @@ from deep_learning.repository.deep_learning_repository import DeepLearningReposi
 
 
 class DeepLearningRepositoryImpl(DeepLearningRepository):
-    def requestToSocketServer(self, request):
-        pass
+    def requestToSocketServer(self, request, systemFastAPITransmitterChannel):
+        print(f"DeepLearningRepositoryImpl requestToSocketServer() -> request: {request}")
+        systemFastAPITransmitterChannel.put(request)
     
