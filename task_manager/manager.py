@@ -48,14 +48,14 @@ class TaskManager(object):
 
         receiverService = ReceiverServiceImpl.getInstance()
         receiverService.requestToInjectClientSocket()
-        receiverService.requestToInjectFastAPIReceiverChannel()
+        receiverService.requestToInjectReceiverFastAPIChannel()
 
         taskWorkerService.createTaskWorker("Receiver", receiverService.requestToReceiveClient)
         taskWorkerService.executeTaskWorker("Receiver")
 
         transmitterService = TransmitterServiceImpl.getInstance()
         transmitterService.requestToInjectClientSocket()
-        transmitterService.requestToInjectTransmitterFastAPIChannel()
+        transmitterService.requestToInjectFastAPITransmitterChannel()
 
         taskWorkerService.createTaskWorker("Transmitter", transmitterService.requestToTransmitClient)
         taskWorkerService.executeTaskWorker("Transmitter")
