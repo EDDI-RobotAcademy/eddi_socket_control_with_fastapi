@@ -3,6 +3,8 @@ import sys
 
 from dotenv import load_dotenv
 
+from system_queue.repository.system_queue_repository_impl import SystemQueueRepositoryImpl
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'include', 'socket_server'))
 
 load_dotenv()
@@ -46,14 +48,20 @@ class TaskManager(object):
         taskWorkerService.createTaskWorker("Acceptor", socketAcceptService.requestToAcceptClient)
         taskWorkerService.executeTaskWorker("Acceptor")
 
+        systemQueueRepository = SystemQueueRepositoryImpl.getInstance()
+        systemFastAPITransmitterChannel = systemQueueRepository.getSystemFastAPISocketTransmitterChannel()
+        systemReceiverFastAPIChannel = systemQueueRepository.getSystemSocketReceiverFastAPIChannel()
+
         receiverService = ReceiverServiceImpl.getInstance()
         receiverService.requestToInjectClientSocket()
+        receiverService.requestToInjectReceiverFastAPIChannel(systemReceiverFastAPIChannel)
 
         taskWorkerService.createTaskWorker("Receiver", receiverService.requestToReceiveClient)
         taskWorkerService.executeTaskWorker("Receiver")
 
         transmitterService = TransmitterServiceImpl.getInstance()
         transmitterService.requestToInjectClientSocket()
+        transmitterService.requestToInjectFastAPITransmitterChannel(systemFastAPITransmitterChannel)
 
         taskWorkerService.createTaskWorker("Transmitter", transmitterService.requestToTransmitClient)
         taskWorkerService.executeTaskWorker("Transmitter")

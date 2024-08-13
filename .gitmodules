@@ -1,3 +1,4 @@
 [submodule "include/socket_server"]
 	path = include/socket_server
 	url = https://github.com/EDDI-RobotAcademy/eddi_socket_server_boiler_plate.git
+	branch = main
