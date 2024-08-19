@@ -5,6 +5,11 @@ from dotenv import load_dotenv
 
 from system_queue.repository.system_queue_repository_impl import SystemQueueRepositoryImpl
 
+try:
+    from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
+except ImportError:
+    UserDefinedQueueRepositoryImpl = None
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'include', 'socket_server'))
 
 load_dotenv()
@@ -55,6 +60,12 @@ class TaskManager(object):
 
         receiverService = ReceiverServiceImpl.getInstance()
         receiverService.requestToInjectReceiverFastAPIChannel(systemReceiverFastAPIChannel)
+
+        if UserDefinedQueueRepositoryImpl is not None:
+            userDefinedQueueRepository = UserDefinedQueueRepositoryImpl.getInstance()
+            userDefinedReceiverFastAPIChannel = userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+
+            receiverService.requestToInjectUserDefinedReceiverFastAPIChannel(userDefinedReceiverFastAPIChannel)
 
         threadWorkerService.createThreadWorker("Receiver", receiverService.requestToReceiveClient)
         threadWorkerService.executeThreadWorker("Receiver")
