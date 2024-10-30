@@ -3,8 +3,12 @@ from pydantic import BaseModel
 
 
 class AICommandRequest(BaseModel):
+    userToken: str
     command: int
     data: Optional[Union[Any, List[Any]]] = None
+
+    def getUserToken(self):
+        return self.userToken
 
     def getCommand(self):
         return self.command
